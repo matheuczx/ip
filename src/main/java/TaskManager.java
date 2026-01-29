@@ -23,8 +23,29 @@ public class TaskManager {
         System.out.println("____________________________________________________________");
 
         for(int i = 0; i<taskCount; i++){
-            System.out.println(i+1 + ". " + (this.taskList[i]).getDescription());
+            System.out.print(i+1 + "." );
+            if(this.taskList[i].isDone()){
+                System.out.print("[X] ");
+            }
+            else{
+                System.out.print("[ ] ");
+            }
+            System.out.println((this.taskList[i]).getDescription());
             System.out.println("____________________________________________________________");
         }
+    }
+
+    public void markTask(int taskIndex){
+        this.taskList[taskIndex].setDone(true);
+        System.out.println("OK mate, I've marked this task as done!");
+        System.out.println("[X] " + taskList[taskIndex].getDescription());
+        System.out.println("____________________________________________________________");
+    }
+
+    public void unmarkTask(int taskIndex){
+        this.taskList[taskIndex].setDone(false);
+        System.out.println("OK mate, I've marked this task as not done yet:");
+        System.out.println("[ ] " + taskList[taskIndex].getDescription());
+        System.out.println("____________________________________________________________");
     }
 }

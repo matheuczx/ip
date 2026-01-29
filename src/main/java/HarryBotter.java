@@ -11,9 +11,8 @@ public class HarryBotter {
         String input;
         TaskManager manager = new TaskManager();
 
-
         while(true){
-            input = scanner.nextLine();
+            input = scanner.nextLine().toLowerCase();
 
             if(input.equals("list")){
                 manager.listTasks();
@@ -23,6 +22,23 @@ public class HarryBotter {
                 System.out.println("____________________________________________________________");
                 break;
             }
+            else if(input.startsWith("mark ")){
+                try {
+                    int taskIndex = Integer.parseInt(input.split(" ")[1]);
+                    manager.markTask(taskIndex-1);
+                } catch(Exception e){
+                    System.out.println("Please provide a valid task number to mark.");
+                }
+            }
+            else if(input.startsWith("unmark ")){
+                try {
+                    int taskIndex = Integer.parseInt(input.split(" ")[1]);
+                    manager.unmarkTask(taskIndex-1);
+                } catch(Exception e){
+                    System.out.println("Please provide a valid task number to mark.");
+                }
+            }
+
             else{
                 manager.addTask(input);
                 System.out.println("Ah, you said: \"" + input + "\", added yo!");

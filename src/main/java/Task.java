@@ -4,6 +4,7 @@ public class Task {
 
     public Task(String description){
         this.description = description;
+        this.isDone = false;
     }
 
     public String getDescription() {
@@ -12,5 +13,13 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 }
