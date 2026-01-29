@@ -1,7 +1,12 @@
+/**
+ * Represents a task with a description and completion status.
+ */
+
 public class Task {
+
     private String description;
     private boolean isDone;
-
+    //constructor
     public Task(String description){
         this.description = description;
         this.isDone = false;
@@ -18,8 +23,8 @@ public class Task {
     public boolean isDone() {
         return isDone;
     }
-
-    public void setDone(boolean done) {
+    //updates status of task
+    public void updateStatus(boolean done) {
         this.isDone = done;
     }
 }

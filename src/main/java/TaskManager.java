@@ -1,18 +1,26 @@
+/**
+ * Manages a list of Task objects.
+ * Supports adding, listing, marking, and unmarking tasks.
+ */
+
 public class TaskManager {
     private Task[] taskList;
     private int taskCount;
-
-    TaskManager(){
+    //constructor
+    public TaskManager(){
         this.taskList = new Task[100];
         this.taskCount = 0;
     }
 
     public Task createTask(String taskDescription){
-        Task newTask = new Task(taskDescription);
-        return newTask;
+        return new Task(taskDescription);
     }
 
     public void addTask(String taskDescription){
+        if (taskCount >= taskList.length) {
+            System.out.println("Cannot add more tasks! Maximum reached.");
+            return;
+        }
         Task newTask = createTask(taskDescription);
         this.taskList[taskCount] = newTask;
         taskCount ++;
@@ -36,14 +44,22 @@ public class TaskManager {
     }
 
     public void markTask(int taskIndex){
-        this.taskList[taskIndex].setDone(true);
+        if (taskIndex < 0 || taskIndex >= taskCount) {
+            System.out.println("Invalid task number!");
+            return;
+        }
+        this.taskList[taskIndex].updateStatus(true);
         System.out.println("OK mate, I've marked this task as done!");
         System.out.println("[X] " + taskList[taskIndex].getDescription());
         System.out.println("____________________________________________________________");
     }
 
     public void unmarkTask(int taskIndex){
-        this.taskList[taskIndex].setDone(false);
+        if (taskIndex < 0 || taskIndex >= taskCount) {
+            System.out.println("Invalid task number!");
+            return;
+        }
+        this.taskList[taskIndex].updateStatus(false);
         System.out.println("OK mate, I've marked this task as not done yet:");
         System.out.println("[ ] " + taskList[taskIndex].getDescription());
         System.out.println("____________________________________________________________");
