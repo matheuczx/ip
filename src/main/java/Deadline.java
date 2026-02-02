@@ -1,4 +1,4 @@
-public class Deadline extends ToDo{
+public class Deadline extends Task{
     private String dueDate;
 
     public Deadline(String description, String dueDate){

@@ -16,14 +16,60 @@ public class TaskManager {
         return new Task(taskDescription);
     }
 
-    public void addTask(String taskDescription){
+    public void addTask(String taskInput){
         if (taskCount >= taskList.length) {
             System.out.println("Cannot add more tasks! Maximum reached.");
             return;
         }
-        Task newTask = createTask(taskDescription);
+
+        Task newTask;
+        String[] taskComponents = taskInput.split(" ",2);
+        String taskType = taskComponents[0].toLowerCase();
+
+        switch (taskType){
+        case "todo":
+            if(taskComponents.length<2){
+                System.out.println("Enter a valid todo task!");
+                return;
+            }
+            newTask = new ToDo(taskComponents[1]);
+            break;
+
+        case "deadline":
+            if(taskComponents.length <2 || !taskComponents[1].contains(" /by ")){
+                System.out.println("Deadline must be in format: description /by date");
+                return;
+            }
+            String[] deadlineComponents = taskComponents[1].split(" /by ",2);
+            newTask  = new Deadline(deadlineComponents[0],deadlineComponents[1]);
+            break;
+
+        case "event":
+            if(taskComponents.length<2 || !taskComponents[1].contains(" /from ") || !taskComponents[1].contains(" /to")){
+                System.out.println("Deadline must be in format: description /from start /to end");
+                return;
+            }
+            // Split task type from event timeline
+            String[] eventTimeline = taskComponents[1].split(" /from ", 2);
+            String eventDescription = eventTimeline[0];
+
+            // Split from and to
+            String[] timelineSplit = eventTimeline[1].split(" /to ",2);
+            String eventStart = timelineSplit[0];
+            String eventEnd = timelineSplit[1];
+
+            newTask = new Event(eventDescription, eventStart, eventEnd);
+            break;
+
+        default:
+            System.out.println("Unknown command! Use todo, deadline, or event. If there's nothing else, type bye.");
+            return;
+        }
+
         this.taskList[taskCount] = newTask;
         taskCount ++;
+
+        System.out.println("Alrighty! Added: " + System.lineSeparator() + newTask.toString());
     }
 
     public void listTasks(){
