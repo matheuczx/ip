@@ -32,13 +32,7 @@ public class TaskManager {
 
         for(int i = 0; i<taskCount; i++){
             System.out.print(i+1 + "." );
-            if(this.taskList[i].isDone()){
-                System.out.print("[X] ");
-            }
-            else{
-                System.out.print("[ ] ");
-            }
-            System.out.println((this.taskList[i]).getDescription());
+            System.out.println(taskList[i].toString());
             System.out.println("____________________________________________________________");
         }
     }
@@ -50,7 +44,7 @@ public class TaskManager {
         }
         this.taskList[taskIndex].updateStatus(true);
         System.out.println("OK mate, I've marked this task as done!");
-        System.out.println("[X] " + taskList[taskIndex].getDescription());
+        System.out.println(taskList[taskIndex].toString());
         System.out.println("____________________________________________________________");
     }
 
@@ -61,7 +55,7 @@ public class TaskManager {
         }
         this.taskList[taskIndex].updateStatus(false);
         System.out.println("OK mate, I've marked this task as not done yet:");
-        System.out.println("[ ] " + taskList[taskIndex].getDescription());
+        System.out.println(taskList[taskIndex].toString());
         System.out.println("____________________________________________________________");
     }
 }

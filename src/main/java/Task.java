@@ -6,6 +6,7 @@ public class Task {
 
     private String description;
     private boolean isDone;
+
     //constructor
     public Task(String description){
         this.description = description;
@@ -26,5 +27,10 @@ public class Task {
     //updates status of task
     public void updateStatus(boolean done) {
         this.isDone = done;
+    }
+
+    @Override
+    public String toString() {
+        return (isDone() ? "[X] " : "[ ] ") + getDescription();
     }
 }
