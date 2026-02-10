@@ -23,9 +23,25 @@ public class TaskManager {
         return input.split(" /by ", 2);
     }
 
-    private String[] parseEvent(String input) {
+    private String[] parseEvent(String input) throws HarryBotterException{
+        if(!input.contains(" /from") || !input.contains("/to")){
+            throw new HarryBotterException(
+                    "Hey mate, event must be in the format: event <desc> /from <start> /to <end>"
+            );
+        }
         String[] eventTimeline = input.split(" /from ", 2);
+
+        if (eventTimeline.length < 2 || eventTimeline[0].isBlank()) {
+            throw new HarryBotterException("Hey mate, what event are you adding?");
+        }
+
         String[] timelineSplit = eventTimeline[1].split(" /to ",2);
+
+        if (timelineSplit.length < 2 || timelineSplit[0].isBlank() || timelineSplit[1].isBlank()) {
+            throw new HarryBotterException(
+                    "Yo, when does your event start and end?"
+            );
+        }
         return new String[]{eventTimeline[0], timelineSplit[0], timelineSplit[1]};
     }
 
@@ -35,7 +51,7 @@ public class TaskManager {
      *
      * @param taskInput the input string entered by the user
      */
-    public void addTask(String taskInput){
+    public void addTask(String taskInput) throws HarryBotterException{
         if (taskCount >= tasks.length) {
             System.out.println("Cannot add more tasks! Maximum reached.");
             return;
@@ -47,25 +63,26 @@ public class TaskManager {
 
         switch (taskType){
         case "todo":
-            if(taskComponents.length<2){
-                System.out.println("Enter a valid todo task!");
-                return;
+            if(taskComponents.length <2 || taskComponents[1].isBlank()){
+                throw new HarryBotterException("Come on, add a task description mate!");
             }
             newTask = new ToDo(taskComponents[1]);
             break;
 
         case "deadline":
-            if (taskComponents.length <2 || !taskComponents[1].contains(" /by ")){
-                System.out.println("Deadline must be in format: description /by date");
-                return;
+            if (taskComponents.length < 2 || taskComponents[1].isBlank()) {
+                throw new HarryBotterException("M8... the description of a deadline cannot be empty.");
             }
             String[] deadlineComponents = parseDeadline(taskComponents[1]);
+            if (deadlineComponents.length < 2 || deadlineComponents[1].isBlank()) {
+                throw new HarryBotterException("add a the description or date mate!");
+            }
             newTask  = new Deadline(deadlineComponents[0],deadlineComponents[1]);
             break;
 
         case "event":
             if (taskComponents.length<2 || !taskComponents[1].contains(" /from ") || !taskComponents[1].contains(" /to")){
-                System.out.println("Deadline must be in format: description /from start /to end");
+                System.out.println("Hey man, deadline must be in format: description /from start /to end");
                 return;
             }
             String[] eventParts = parseEvent(taskComponents[1]);
@@ -73,8 +90,9 @@ public class TaskManager {
             break;
 
         default:
-            System.out.println("Unknown command! Use todo, deadline, or event. If there's nothing else, type bye.");
-            return;
+            throw new HarryBotterException(
+                    "What did you say? Use todo, deadline, or event. If there's nothing else, type bye."
+            );
         }
 
         this.tasks[taskCount] = newTask;
@@ -94,10 +112,9 @@ public class TaskManager {
         }
     }
 
-    public void markTask(int taskIndex){
-        if (taskIndex < 0 || taskIndex >= taskCount) {
-            System.out.println("Invalid task number!");
-            return;
+    public void markTask(int taskIndex) throws HarryBotterException{
+        if (taskIndex<0 || taskIndex >=taskCount){
+            throw new HarryBotterException("Invalid task number mate!");
         }
         this.tasks[taskIndex].updateStatus(true);
         System.out.println("OK mate, I've marked this task as done!");
@@ -105,10 +122,9 @@ public class TaskManager {
         System.out.println(LINE);
     }
 
-    public void unmarkTask(int taskIndex){
-        if (taskIndex < 0 || taskIndex >= taskCount) {
-            System.out.println("Invalid task number!");
-            return;
+    public void unmarkTask(int taskIndex) throws HarryBotterException{
+        if (taskIndex<0 || taskIndex >=taskCount){
+            throw new HarryBotterException("Invalid task number mate!");
         }
         this.tasks[taskIndex].updateStatus(false);
         System.out.println("OK mate, I've marked this task as not done yet:");
