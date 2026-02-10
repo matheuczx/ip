@@ -1,3 +1,7 @@
+package HarryBotter;
+
+import HarryBotter.UI.UserInterface;
+
 public class CommandHandler {
     private TaskManager manager;
     private UserInterface userInterface;

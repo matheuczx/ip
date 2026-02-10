@@ -1,3 +1,6 @@
+package HarryBotter;
+
+import HarryBotter.UI.UserInterface;
 
 /**
  * HarryBotter is a simple chatbot
