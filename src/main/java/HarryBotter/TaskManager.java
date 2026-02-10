@@ -1,3 +1,10 @@
+package HarryBotter;
+
+import HarryBotter.task.Deadline;
+import HarryBotter.task.Event;
+import HarryBotter.task.Task;
+import HarryBotter.task.ToDo;
+
 /**
  * Manages a list of Task objects.
  * Supports adding, listing, marking, and unmarking tasks.

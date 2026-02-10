@@ -1,3 +1,4 @@
+package HarryBotter.UI;
 import java.util.Scanner;
 
 public class UserInterface {
