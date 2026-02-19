@@ -2,6 +2,8 @@ package HarryBotter;
 
 import HarryBotter.UI.UserInterface;
 
+import java.io.IOException;
+
 public class CommandHandler {
     private TaskManager manager;
     private UserInterface userInterface;
@@ -32,6 +34,8 @@ public class CommandHandler {
             }
         } catch (HarryBotterException e){
             userInterface.showError(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return false;

@@ -1,9 +1,12 @@
 package HarryBotter;
 
+import HarryBotter.storage.Storage;
 import HarryBotter.task.Deadline;
 import HarryBotter.task.Event;
 import HarryBotter.task.Task;
 import HarryBotter.task.ToDo;
+
+import java.io.IOException;
 
 /**
  * Manages a list of Task objects.
@@ -15,11 +18,28 @@ public class TaskManager {
     private int taskCount;
     private static final int MAX_TASKS = 100;
     private static final String LINE = "____________________________________________________________";
+    private Storage storage;
 
     //constructor
-    public TaskManager(){
+    public TaskManager(Storage storage){
         this.tasks = new Task[MAX_TASKS];
         this.taskCount = 0;
+        this.storage = storage;
+        Task[] loadedTasks = storage.load();
+        for (Task t : loadedTasks) {
+            if (t != null) addTaskFromLoad(t);
+        }
+    }
+
+    public void setTasks(Task[] tasks) {
+        this.tasks = tasks;
+        this.taskCount = 0;
+        for (Task t : tasks) {
+            if (t != null) this.taskCount++;
+        }
+    }
+    private void addTaskFromLoad(Task t) {
+        tasks[taskCount++] = t;
     }
 
     public Task createTask(String taskDescription){
@@ -58,7 +78,7 @@ public class TaskManager {
      *
      * @param taskInput the input string entered by the user
      */
-    public void addTask(String taskInput) throws HarryBotterException{
+    public void addTask(String taskInput) throws HarryBotterException, IOException {
         if (taskCount >= tasks.length) {
             System.out.println("Cannot add more tasks! Maximum reached.");
             return;
@@ -104,7 +124,7 @@ public class TaskManager {
 
         this.tasks[taskCount] = newTask;
         taskCount++;
-
+        storage.save(this.tasks, this.taskCount);
         System.out.println("Alrighty! Added: " + System.lineSeparator() + newTask.toString());
     }
 
@@ -119,23 +139,27 @@ public class TaskManager {
         }
     }
 
-    public void markTask(int taskIndex) throws HarryBotterException{
+    public void markTask(int taskIndex) throws HarryBotterException, IOException {
         if (taskIndex<0 || taskIndex >=taskCount){
             throw new HarryBotterException("Invalid task number mate!");
         }
         this.tasks[taskIndex].updateStatus(true);
+        storage.save(this.tasks, this.taskCount);
+
         System.out.println("OK mate, I've marked this task as done!");
         System.out.println(tasks[taskIndex].toString());
         System.out.println(LINE);
     }
 
-    public void unmarkTask(int taskIndex) throws HarryBotterException{
+    public void unmarkTask(int taskIndex) throws HarryBotterException, IOException {
         if (taskIndex<0 || taskIndex >=taskCount){
             throw new HarryBotterException("Invalid task number mate!");
         }
         this.tasks[taskIndex].updateStatus(false);
+        storage.save(this.tasks, this.taskCount);
         System.out.println("OK mate, I've marked this task as not done yet:");
         System.out.println(tasks[taskIndex].toString());
         System.out.println(LINE);
     }
+
 }
