@@ -13,15 +13,11 @@ import java.util.ArrayList;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
-    //private Task[] tasks;
-    //private int taskCount;
-    //private static final int MAX_TASKS = 100;
     private static final String LINE = "____________________________________________________________";
 
     //constructor
     public TaskManager(){
         this.tasks = new ArrayList<>();
-    //    this.taskCount = 0;
     }
 
     public Task createTask(String taskDescription){
@@ -61,12 +57,6 @@ public class TaskManager {
      * @param taskInput the input string entered by the user
      */
     public void addTask(String taskInput) throws HarryBotterException{
-        /*
-        if (taskCount >= tasks.length) {
-            System.out.println("Cannot add more tasks! Maximum reached.");
-            return;
-        }
-         */
 
         Task newTask;
         String[] taskComponents = taskInput.split(" ",2);
@@ -106,11 +96,10 @@ public class TaskManager {
             );
         }
 
-        //this.tasks[taskCount] = newTask;
-        //taskCount++;
         tasks.add(newTask);
 
         System.out.println("Alrighty! Added: " + System.lineSeparator() + newTask.toString());
+        System.out.println("Sigh Now you have " + tasks.size() + " tasks left to complete!");
     }
 
     public void listTasks(){
@@ -143,16 +132,18 @@ public class TaskManager {
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(LINE);
     }
-/*
+
     public void deleteTask(int taskIndex) throws HarryBotterException{
         if (taskIndex<0 || taskIndex >= tasks.size()){
             throw new HarryBotterException("Choose an valid task number to delete mate!");
         }
+
+        Task removedTask = tasks.remove(taskIndex);
+
         System.out.println("Sure mate, I have removed this task for you: ");
-        System.out.println(tasks.get(taskIndex).toString());
-        System.out.println("Congrats! Now you have" + tasks.size() + "tasks left to complete!");
+        System.out.println(" " + removedTask);
+        System.out.println("Congrats! Now you have " + tasks.size() + " tasks left to complete!");
         System.out.println(LINE);
     }
 
- */
 }
