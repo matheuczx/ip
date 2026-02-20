@@ -27,6 +27,9 @@ public class CommandHandler {
             else if(input.startsWith("unmark")){
                 handleUnmark(input);
             }
+            else if(input.startsWith("delete")){
+                handleDelete(input);
+            }
             else{
                 manager.addTask(input);
             }
@@ -42,7 +45,7 @@ public class CommandHandler {
             int taskIndex = Integer.parseInt(input.split(" ")[1]);
             manager.unmarkTask(taskIndex-1);
         } catch(Exception e){
-            System.out.println("Thats not it. Please provide a valid task number to mark.");
+            System.out.println("Thats not it. Please provide a valid task number to unmark.");
         }
     }
 
@@ -52,6 +55,15 @@ public class CommandHandler {
             manager.markTask(taskIndex-1);
         } catch(Exception e){
             System.out.println("Thats not it. Please provide a valid task number to mark.");
+        }
+    }
+
+    private void handleDelete(String input){
+        try {
+            int taskIndex = Integer.parseInt(input.split(" ")[1]);
+            manager.deleteTask(taskIndex-1);
+        } catch(Exception e){
+            System.out.println("Thats not it. Please provide a valid task number to delete.");
         }
     }
 }
