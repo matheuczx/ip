@@ -10,6 +10,14 @@ public class Event extends Task{
         this.endDateTime = endDateTime;
     }
 
+    public String getStartDateTime() {
+        return startDateTime;
+    }
+
+    public String getEndDateTime() {
+        return endDateTime;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.startDateTime + " to: " + this.endDateTime + ")";

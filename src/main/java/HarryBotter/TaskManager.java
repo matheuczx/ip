@@ -1,10 +1,13 @@
 package HarryBotter;
 
+import HarryBotter.storage.Storage;
 import HarryBotter.task.Deadline;
 import HarryBotter.task.Event;
 import HarryBotter.task.Task;
 import HarryBotter.task.ToDo;
 import java.util.ArrayList;
+
+import java.io.IOException;
 
 /**
  * Manages a list of Task objects.
@@ -14,14 +17,30 @@ import java.util.ArrayList;
 public class TaskManager {
     private ArrayList<Task> tasks;
     private static final String LINE = "____________________________________________________________";
+    private Storage storage;
 
     //constructor
-    public TaskManager(){
+
+    public TaskManager(Storage storage){
         this.tasks = new ArrayList<>();
+        this.storage = storage;
+        Task[] loadedTasks = storage.load();
+        for (Task t : loadedTasks) {
+            if (t != null) tasks.add(t);
+        }
     }
 
     public Task createTask(String taskDescription){
         return new Task(taskDescription);
+    }
+
+    public void setTasks(Task[] tasksArray) {
+        tasks.clear(); // remove existing tasks
+        for (Task t : tasksArray) {
+            if (t != null) {
+                tasks.add(t);
+            }
+        }
     }
 
     private String[] parseDeadline(String input) {
@@ -56,7 +75,8 @@ public class TaskManager {
      *
      * @param taskInput the input string entered by the user
      */
-    public void addTask(String taskInput) throws HarryBotterException{
+
+    public void addTask(String taskInput) throws HarryBotterException, IOException{
 
         Task newTask;
         String[] taskComponents = taskInput.split(" ",2);
@@ -97,7 +117,7 @@ public class TaskManager {
         }
 
         tasks.add(newTask);
-
+        storage.save(this.tasks);
         System.out.println("Alrighty! Added: " + System.lineSeparator() + newTask.toString());
         System.out.println("Sigh Now you have " + tasks.size() + " tasks left to complete!");
     }
@@ -113,33 +133,35 @@ public class TaskManager {
         }
     }
 
-    public void markTask(int taskIndex) throws HarryBotterException{
+    public void markTask(int taskIndex) throws HarryBotterException, IOException{
         if (taskIndex<0 || taskIndex >=tasks.size()){
             throw new HarryBotterException("Invalid task number mate!");
         }
         this.tasks.get(taskIndex).updateStatus(true);
+        storage.save(this.tasks);
         System.out.println("OK mate, I've marked this task as done!");
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(LINE);
     }
 
-    public void unmarkTask(int taskIndex) throws HarryBotterException{
+    public void unmarkTask(int taskIndex) throws HarryBotterException, IOException{
         if (taskIndex<0 || taskIndex >=tasks.size()){
             throw new HarryBotterException("Invalid task number mate!");
         }
         tasks.get(taskIndex).updateStatus(false);
+        storage.save(this.tasks);
         System.out.println("OK mate, I've marked this task as not done yet:");
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(LINE);
     }
 
-    public void deleteTask(int taskIndex) throws HarryBotterException{
+    public void deleteTask(int taskIndex) throws HarryBotterException, IOException {
         if (taskIndex<0 || taskIndex >= tasks.size()){
             throw new HarryBotterException("Choose an valid task number to delete mate!");
         }
 
         Task removedTask = tasks.remove(taskIndex);
-
+        storage.save(this.tasks);
         System.out.println("Sure mate, I have removed this task for you: ");
         System.out.println(" " + removedTask);
         System.out.println("Congrats! Now you have " + tasks.size() + " tasks left to complete!");
