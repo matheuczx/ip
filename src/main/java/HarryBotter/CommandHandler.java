@@ -3,16 +3,40 @@ package HarryBotter;
 import HarryBotter.UI.UserInterface;
 
 import java.io.IOException;
-
+/**
+ * Handles parsing and execution of user commands.
+ * Delegates actions to TaskManager and communicates errors via UserInterface.
+ */
 public class CommandHandler {
     private TaskManager manager;
     private UserInterface userInterface;
 
+    /**
+     * Constructs a CommandHandler with a TaskManager and UserInterface.
+     *
+     * The TaskManager responsible for task operations.
+     * The UserInterface for displaying messages to the user.
+     */
     public CommandHandler(TaskManager manager, UserInterface userInterface){
         this.manager =  manager;
         this.userInterface = userInterface;
     }
 
+    /**
+     * Parses a user's input command and executes the corresponding action.
+     *
+     * Supports commands:
+     * - list
+     * - bye
+     * - mark <taskIndex>
+     * - unmark <taskIndex>
+     * - delete <taskIndex>
+     * - find <keyword>
+     * - adding new tasks (todo, deadline, event)
+     *
+     * @param input The user's input command.
+     * @return true if the user wants to exit (bye), false otherwise.
+     */
     public boolean handleInput(String input){
         input = input.toLowerCase();
 

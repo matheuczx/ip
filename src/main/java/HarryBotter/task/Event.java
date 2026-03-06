@@ -1,4 +1,9 @@
 package HarryBotter.task;
+/**
+ * Represents an event task that occurs within a specific time frame.
+ * An Event is a type of Task that includes both a start date/time
+ * and an end date/time to indicate its duration.
+ */
 
 public class Event extends Task{
     private String startDateTime;

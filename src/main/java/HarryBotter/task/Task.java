@@ -3,6 +3,11 @@ package HarryBotter.task;
 /**
  * Represents a task with a description and completion status.
  */
+/**
+ * Represents a generic task with a description and completion status.
+ * This is the base class for more specific task types
+ * Each Task has a description and a flag indicating whether it is completed.
+ */
 
 public class Task {
 

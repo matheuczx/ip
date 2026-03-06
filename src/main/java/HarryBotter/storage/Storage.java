@@ -1,9 +1,17 @@
 package HarryBotter.storage;
 
-import HarryBotter.task.*;
-
+import HarryBotter.task.Deadline;
+import HarryBotter.task.Event;
+import HarryBotter.task.Task;
+import HarryBotter.task.ToDo;
 import java.io.*;
 import java.util.ArrayList;
+
+/**
+ * Handles saving and loading tasks from a file on the hard disk.
+ * The file stores tasks in a text format that can be reconstructed
+ * into Task objects when the program starts.
+ */
 
 public class Storage {
     private String filePath;
@@ -13,7 +21,12 @@ public class Storage {
         File f = new File(filePath);
         f.getParentFile().mkdirs(); // create folders if missing
     }
-
+    /**
+     * Loads tasks from the storage file.
+     * If the file does not exist, an empty Task array is returned.
+     *
+     * @return an array of Task objects loaded from the file
+     */
     public Task[] load() {
         File f = new File(filePath);
 
@@ -78,7 +91,14 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * Saves the list of tasks to the storage file.
+     * Each task is written in a structured text format that can
+     * be reconstructed when loading.
+     *
+     * @param tasks the list of tasks to be saved
+     * @throws IOException if an error occurs while writing to the file
+     */
     public void save(ArrayList<Task> tasks) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
         for (Task t : tasks) {

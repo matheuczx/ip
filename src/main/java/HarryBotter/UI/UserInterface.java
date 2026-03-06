@@ -1,6 +1,9 @@
 package HarryBotter.UI;
 import java.util.Scanner;
-
+/**
+ * Handles interactions with the user.
+ * Displays messages, reads user input, and prints errors.
+ */
 public class UserInterface {
     private static final String LINE =
             "____________________________________________________________";
