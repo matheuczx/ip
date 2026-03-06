@@ -1,4 +1,9 @@
 package HarryBotter.task;
+/**
+ * Represents a task with a specific deadline.
+ * A Deadline is a type of Task that includes a due date
+ * indicating when the task should be completed.
+ */
 
 public class Deadline extends Task{
     private String dueDate;

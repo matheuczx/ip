@@ -11,7 +11,8 @@ import java.io.IOException;
 
 /**
  * Manages a list of Task objects.
- * Supports adding, listing, marking, and unmarking tasks.
+ * Supports adding, listing, marking, unmarking, deleting, and finding tasks.
+ * Tasks are persisted using a Storage object.
  */
 
 public class TaskManager {
@@ -19,8 +20,12 @@ public class TaskManager {
     private static final String LINE = "____________________________________________________________";
     private Storage storage;
 
-    //constructor
-
+    /**
+     * Constructor for TaskManager.
+     * Loads saved tasks from the provided Storage object.
+     *
+     * @param storage the Storage object responsible for saving/loading tasks
+     */
     public TaskManager(Storage storage){
         this.tasks = new ArrayList<>();
         this.storage = storage;
@@ -38,6 +43,7 @@ public class TaskManager {
             }
         }
     }
+
 
     private String[] parseDeadline(String input) {
         return input.split(" /by ", 2);
@@ -117,7 +123,9 @@ public class TaskManager {
         System.out.println("Alrighty! Added: " + System.lineSeparator() + newTask.toString());
         System.out.println("Sigh Now you have " + tasks.size() + " tasks left to complete!");
     }
-
+    /**
+     * Lists all tasks currently stored in the task manager.
+     */
     public void listTasks(){
         System.out.println("Here ya go!");
         System.out.println(LINE);
@@ -128,7 +136,13 @@ public class TaskManager {
             System.out.println(LINE);
         }
     }
-
+    /**
+     * Marks the task at the specified index as done.
+     *
+     * @param taskIndex the index of the task to mark
+     * @throws HarryBotterException if the task index is invalid
+     * @throws IOException if saving the tasks fails
+     */
     public void markTask(int taskIndex) throws HarryBotterException, IOException{
         if (taskIndex<0 || taskIndex >=tasks.size()){
             throw new HarryBotterException("Invalid task number mate!");
@@ -139,7 +153,13 @@ public class TaskManager {
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(LINE);
     }
-
+    /**
+     * Marks the task at the specified index as done.
+     *
+     * @param taskIndex the index of the task to mark
+     * @throws HarryBotterException if the task index is invalid
+     * @throws IOException if saving the tasks fails
+     */
     public void unmarkTask(int taskIndex) throws HarryBotterException, IOException{
         if (taskIndex<0 || taskIndex >=tasks.size()){
             throw new HarryBotterException("Invalid task number mate!");
@@ -150,7 +170,13 @@ public class TaskManager {
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(LINE);
     }
-
+    /**
+     * Deletes the task at the specified index.
+     *
+     * @param taskIndex the index of the task to delete
+     * @throws HarryBotterException if the task index is invalid
+     * @throws IOException if saving the tasks fails
+     */
     public void deleteTask(int taskIndex) throws HarryBotterException, IOException {
         if (taskIndex<0 || taskIndex >= tasks.size()){
             throw new HarryBotterException("Choose an valid task number to delete mate!");
@@ -163,6 +189,13 @@ public class TaskManager {
         System.out.println("Congrats! Now you have " + tasks.size() + " tasks left to complete!");
         System.out.println(LINE);
     }
+    /**
+     * Unmarks the task at the specified index (marks as not done).
+     *
+     * @param taskIndex the index of the task to unmark
+     * @throws HarryBotterException if the task index is invalid
+     * @throws IOException if saving the tasks fails
+     */
     public void findTasks(String keyword) {
         System.out.println("Searching.... ");
         System.out.println(LINE);
