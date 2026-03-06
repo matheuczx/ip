@@ -32,6 +32,9 @@ public class CommandHandler {
             else if(input.startsWith("delete")){
                 handleDelete(input);
             }
+            else if (input.startsWith("find ")) {
+                handleFind(input);
+            }
             else{
                 manager.addTask(input);
             }
@@ -68,6 +71,18 @@ public class CommandHandler {
             manager.deleteTask(taskIndex-1);
         } catch(Exception e){
             System.out.println("Thats not it. Please provide a valid task number to delete.");
+        }
+    }
+    private void handleFind(String input){
+        try {
+            String keyword = input.substring(5).trim(); // remove find command from search string
+            if (keyword.isEmpty()) {
+                System.out.println("Please provide a keyword to search for!");
+                return;
+            }
+            manager.findTasks(keyword);
+        } catch(Exception e){
+            System.out.println("Oops! Something went wrong while searching mate.");
         }
     }
 }
