@@ -30,10 +30,6 @@ public class TaskManager {
         }
     }
 
-    public Task createTask(String taskDescription){
-        return new Task(taskDescription);
-    }
-
     public void setTasks(Task[] tasksArray) {
         tasks.clear(); // remove existing tasks
         for (Task t : tasksArray) {
@@ -167,5 +163,23 @@ public class TaskManager {
         System.out.println("Congrats! Now you have " + tasks.size() + " tasks left to complete!");
         System.out.println(LINE);
     }
+    public void findTasks(String keyword) {
+        System.out.println("Searching.... ");
+        System.out.println(LINE);
 
+        int count = 0;
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
+            if (t.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                count++;
+                System.out.println(count + "." + t);
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("Sorry Mate! No tasks matched your search keyword!");
+        }
+
+        System.out.println(LINE);
+    }
 }
