@@ -70,7 +70,12 @@ public class CommandHandler {
 
         return false;
     }
-
+    /**
+     * Handles the "unmark" command from the user input.
+     * Marks the specified task as not done.
+     *
+     * @param input the raw user input (e.g., "unmark 2")
+     */
     private void handleUnmark(String input){
         try {
             int taskIndex = Integer.parseInt(input.split(" ")[1]);
@@ -97,6 +102,12 @@ public class CommandHandler {
             System.out.println("Thats not it. Please provide a valid task number to delete.");
         }
     }
+    /**
+     * Handles the "find" command from the user input.
+     * Searches for tasks that contain the given keyword.
+     *
+     * @param input the raw user input (e.g., "find book")
+     */
     private void handleFind(String input){
         try {
             String keyword = input.substring(5).trim(); // remove find command from search string
